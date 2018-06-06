@@ -1,6 +1,10 @@
 package edu.cs.ubb.dictionarylearn.model;
 
 import lombok.NoArgsConstructor;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,12 +12,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NoArgsConstructor
 public class User {
+
     @Id
     @SequenceGenerator(name = "seq_gen")
     @GeneratedValue(generator = "seq_gen")
-    private long id;
-
-    @NotNull
     @Column(length = 100)
     private String email;
 
@@ -31,15 +33,16 @@ public class User {
 
     @NotNull
     @Column(length = 100)
-    private String zip;
+    private String state;
 
-    public long getId() {
-        return id;
-    }
+    @Column()
+    private Boolean admin;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    private Set<Favorite> favorites = new HashSet<Favorite>();
+
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    private Set<AllowTold> allowTolds = new HashSet<AllowTold>();
 
     public String getEmail() {
         return email;
@@ -73,11 +76,33 @@ public class User {
         this.town = town;
     }
 
-    public String getZip() {
-        return zip;
+    public String getState() {
+        return state;
     }
 
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Boolean getAdmin() {return admin;}
+
+    public void setAdmin(Boolean admin) { this.admin = admin;}
+
+    @JsonIgnore
+    public Set<Favorite> getFavorite() {
+        return favorites;
+    }
+
+    public void setFavirite(Set<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+
+    @JsonIgnore
+    public Set<AllowTold> getAllowTold() {
+        return allowTolds;
+    }
+
+    public void setAllowTold(Set<AllowTold> allowTolds) {
+        this.allowTolds = allowTolds;
     }
 }

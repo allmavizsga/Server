@@ -22,11 +22,15 @@ public class UserService {
         return this.repository.save(usr);
     }
 
-    public void deleteById(long id){
-        this.repository.deleteById(id);
+    public void deleteById(String email){
+        this.repository.deleteById(email);
     }
 
     public User findByEmailAndPassword(String email, String password){
         return this.repository.findByEmailAndPassword(email, password);
+    }
+
+    public User findByEmail(String email){
+        return this.repository.findByEmail(email);
     }
 }
