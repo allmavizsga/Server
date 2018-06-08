@@ -17,9 +17,7 @@ public class AllowUserService {
         return this.repository.findAll();
     }
 
-    public AllowUser save(AllowUser usr){
-        return this.repository.save(usr);
-    }
+    public void save(AllowUser usr){ this.repository.save(usr); }
 
     public void deleteById(String email){
         this.repository.deleteById(email);

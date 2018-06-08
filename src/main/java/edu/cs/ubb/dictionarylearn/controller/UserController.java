@@ -4,14 +4,14 @@ import edu.cs.ubb.dictionarylearn.model.User;
 import edu.cs.ubb.dictionarylearn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
+
     private UserService service;
 
     @Autowired
@@ -33,5 +33,16 @@ public class UserController {
     public User findByIdEmail(@PathVariable String email){
         return this.service.findByEmail(email);
     }
+
+    @RequestMapping(path = "/{user}",  method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  User save(@PathVariable String user) {
+        User user1 = new User();
+        user1.setAddress("dsad");
+        user1.setAdmin(false);
+        user1.setEmail("asdsa@sad");
+        user1.setPassword("sad");
+        user1.setState("sd");
+        user1.setTown("sad");
+        return this.service.save(user1);}
 }
 

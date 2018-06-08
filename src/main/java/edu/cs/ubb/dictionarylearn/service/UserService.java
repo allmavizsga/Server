@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
     private UserRepository repository;
 
     @Autowired
@@ -18,8 +19,8 @@ public class UserService {
         return this.repository.findAll();
     }
 
-    public User save(User usr){
-        return this.repository.save(usr);
+    public User save(User user){
+         return this.repository.save(user);
     }
 
     public void deleteById(String email){

@@ -17,8 +17,8 @@ public class AllowToldService {
         return this.repository.findAll();
     }
 
-    public AllowTold save(AllowTold allowTold){
-        return this.repository.save(allowTold);
+    public void save(AllowTold allowTold){
+        this.repository.save(allowTold);
     }
 
     public void deleteById(Long allowToldId){
