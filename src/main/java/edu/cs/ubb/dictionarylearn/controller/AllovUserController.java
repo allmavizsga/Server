@@ -38,7 +38,7 @@ public class AllovUserController {
 
     @RequestMapping(path = "/{allowUserEmail}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteAllowUserEmail(@PathVariable String allowUserEmail){
-        this.service.deleteById(allowUserEmail);
+        this.service.deleteByEmail(allowUserEmail);
     }
 
     @RequestMapping(path = "/{allowUserEmail}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +46,7 @@ public class AllovUserController {
         if( this.userService.findByEmail(allowUserEmail) == null )
         {
 
-            AllowUser allowUser = this.service.findByAllowUserEmail(allowUserEmail);
+            AllowUser allowUser = this.service.findByAllowUserEmail(allowUserEmail).iterator().next();
             User user = new User();
             user.setAddress(allowUser.getAddress());
             user.setAdmin(allowUser.getAdmin());
@@ -58,7 +58,20 @@ public class AllovUserController {
 
             System.out.println("itt");
         }
-
-        this.service.deleteById(allowUserEmail);
+        this.service.deleteByEmail(allowUserEmail);
     }
+
+    @RequestMapping(path = "/new/{allowUserEmail}/{allowUserPassword}/{allowUserAddress}/{allowUserTown}/{allowUserState}/{allowUserAdmin}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public AllowUser saveAllowUser(@PathVariable String allowUserEmail, @PathVariable String allowUserPassword, @PathVariable String allowUserAddress, @PathVariable String allowUserTown, @PathVariable String allowUserState, @PathVariable Boolean allowUserAdmin){
+        AllowUser allowUser = new AllowUser();
+        allowUser.setEmail(allowUserEmail);
+        allowUser.setPassword(allowUserPassword);
+        allowUser.setAddress(allowUserAddress);
+        allowUser.setTown(allowUserTown);
+        allowUser.setState(allowUserState);
+        allowUser.setAdmin(allowUserAdmin);
+        System.out.println(allowUser.getEmail());
+        return this.service.save(allowUser);
+    }
+
 }

@@ -1,6 +1,7 @@
 package edu.cs.ubb.dictionarylearn.controller;
 
 import edu.cs.ubb.dictionarylearn.model.Told;
+import edu.cs.ubb.dictionarylearn.model.Word;
 import edu.cs.ubb.dictionarylearn.service.ToldService;
 import edu.cs.ubb.dictionarylearn.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,20 +27,37 @@ public class ToldController {
         return this.service.findAll();
     }
 
-    @RequestMapping(path = "/{wordId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Told> getAllToldByWord(@PathVariable Long wordId){
-        return this.service.findAllByWord( this.wordService.findByWordId(wordId));
+
+    @PostMapping("/ptold")
+    public Told getToldByTold(@RequestBody String told){
+        told = told.replace('+',' ');
+        told = told.substring(0,told.length()-1);
+        System.out.println(told);
+        return this.service.findAllByTold(told);
     }
 
-    @RequestMapping(path = "/{told}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Told getToldByTold(@PathVariable String told){
-        return this.service.findAllByTold( told);
+    @PostMapping("/newtold")
+    public void save(@RequestBody String told, @RequestBody Long wordId){
+        told = told.replace('+',' ');
+        told = told.substring(0,told.length()-1);
+        System.out.println(told);
+        Told mytold = new Told();
+        mytold.setTold(told);
+        Word word = this.wordService.findByWordId(wordId);
+        mytold.setWord(word);
+        this.service.save(mytold);
     }
 
-    @RequestMapping(path = "/{told}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deletToldByTold(@PathVariable String told){
-        this.service.deleteByTold( told);
+    @RequestMapping(path = "/{toldId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deletToldByTold(@PathVariable Long toldId){
+        this.service.deleteById( toldId);
     }
 
+    @RequestMapping(path = "/tolds/{wordId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<Told> findAllByWord(@PathVariable Long wordId){
+        Word word = this.wordService.findByWordId(wordId);
+        System.out.println(word.getWordId());
+        return this.service.findAllByWord( word);
+    }
 
 }

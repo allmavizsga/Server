@@ -17,13 +17,16 @@ public class AllowUserService {
         return this.repository.findAll();
     }
 
-    public void save(AllowUser usr){ this.repository.save(usr); }
+    public AllowUser save(AllowUser usr){ return this.repository.save(usr); }
 
-    public void deleteById(String email){
-        this.repository.deleteById(email);
+    public void deleteByEmail(String email){
+        this.repository.deleteByEmail(email);
+    }
+    public void deleteById(Long id){
+        this.repository.deleteById(id);
     }
 
-    public AllowUser findByAllowUserEmail(String email){
-        return this.repository.findByAllowUserEmail(email);
+    public Iterable<AllowUser> findByAllowUserEmail(String email){
+        return this.repository.findByEmail(email);
     }
 }

@@ -25,14 +25,22 @@ public class AllowToldController {
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<AllowTold> getAllAllowTolds(){
+    public Iterable<AllowTold> getAllAllow(){
         return this.service.findAll();
     }
 
     @RequestMapping(path = "/first", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public AllowTold getFirstAllowTolds(){
-        return this.service.findAll().iterator().next();
+    public AllowTold getFirstAllow(){
+        Iterable<AllowTold> allowTold = this.service.findAll();
+        if(allowTold.iterator().hasNext()) {
+            System.out.println("Benne allowtold first");
+            return allowTold.iterator().next();
+        }
+        System.out.println("nem megy bele allowtold first");
+        return new AllowTold();
     }
+
+
 
     @RequestMapping(path = "/{allowToldId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteAllowTolds(@PathVariable Long allowToldId){
@@ -42,15 +50,22 @@ public class AllowToldController {
     @RequestMapping(path = "/{allowToldId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public void acceptAllowTolds(@PathVariable Long allowToldId){
         AllowTold tempAllowTold = this.service.findByAllowToldId(allowToldId);
+        System.out.println(tempAllowTold.getAllowTold());
         Told told = new Told();
         told.setTold(tempAllowTold.getAllowTold());
         told.setWord(tempAllowTold.getWord());
-        told.setToldId(0L);
         this.service.deleteById(allowToldId);
-        System.out.println(this.toldService.findAllByTold(told.getTold()));
-        if( this.toldService.findAllByTold(told.getTold()) != null) {
-
+        if( this.toldService.findAllByTold(told.getTold()) == null) {
+            System.out.println("benne");
             this.toldService.save(told);
         }
+        System.out.println("nincs");
+    }
+
+    @RequestMapping(path = "/uj", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void accept() {
+        Told told = new Told();
+        told.setTold("asdasd");
+        this.toldService.save(told);
     }
 }

@@ -4,7 +4,6 @@ import edu.cs.ubb.dictionarylearn.model.User;
 import edu.cs.ubb.dictionarylearn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,18 +30,31 @@ public class UserController {
 
     @RequestMapping(path = "/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public User findByIdEmail(@PathVariable String email){
-        return this.service.findByEmail(email);
+        User user = this.service.findByEmail(email);
+        if( user != null)
+            return user;
+        return new User();
     }
 
-    @RequestMapping(path = "/{user}",  method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public  User save(@PathVariable String user) {
-        User user1 = new User();
-        user1.setAddress("dsad");
-        user1.setAdmin(false);
-        user1.setEmail("asdsa@sad");
-        user1.setPassword("sad");
-        user1.setState("sd");
-        user1.setTown("sad");
-        return this.service.save(user1);}
+    @RequestMapping(path = "/{email}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteByIdEmail(@PathVariable String email){
+         this.service.deleteByEmail(email);
+    }
+
+    @RequestMapping(path = "/newuser",  method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  User save(@RequestBody User user) {
+        if (service.findByEmail(user.getEmail()) == null) {
+            User myuser = new User();
+            myuser.setAddress(user.getAddress());
+            myuser.setAdmin(user.getAdmin());
+            myuser.setEmail(user.getEmail());
+            myuser.setPassword(user.getPassword());
+            myuser.setState(user.getState());
+            myuser.setTown(user.getTown());
+            return this.service.save(myuser);
+        }
+
+        return  new User();
+    }
 }
 

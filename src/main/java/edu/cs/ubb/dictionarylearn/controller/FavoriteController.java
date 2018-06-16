@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
+
 
 @RestController
 @RequestMapping("/favorite")
@@ -17,6 +19,7 @@ public class FavoriteController {
     private FavoriteService service;
     private UserService userService;
     private WordService wordService;
+    private int[] randomNumber;
 
     @Autowired
     public FavoriteController(FavoriteService service, UserService userService, WordService wordService){
@@ -32,8 +35,23 @@ public class FavoriteController {
 
 
     @RequestMapping(path = "/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Favorite> findByEmail(@PathVariable String email){
-        return this.service.findByUser( this.userService.findByEmail(email));
+    public List<Favorite> findByEmail(@PathVariable String email){
+        List<Favorite> favorite = this.service.findByUser( this.userService.findByEmail(email));
+        return  favorite;
+
+    }
+
+
+    @RequestMapping(path = "/game/{email}/{piece}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Favorite> findfirstTwentyByEmail(@PathVariable String email, @PathVariable int piece){
+        List<Favorite> favorite = this.service.findByUser( this.userService.findByEmail(email));
+        System.out.println("");
+        if( favorite.size() <= piece) {
+            return favorite;
+        } else{
+            return randomList(favorite.size(),favorite,piece);
+        }
+
     }
 
     @RequestMapping(path = "/{email}/{wordId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,6 +71,27 @@ public class FavoriteController {
     @RequestMapping(path = "/{email}/{wordId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable String email, @PathVariable Long wordId){
         this.service.deleteById( this.service.findByUserAndWord( this.userService.findByEmail(email), this.wordService.findByWordId(wordId)).getfavoriteId() );
+    }
+
+    private List<Favorite> randomList(int n, List<Favorite> favorites,int piece){
+        randomNumber = new int[n];
+        randomInt(n,piece);
+        List<Favorite> list = new ArrayList<>();
+
+        for(int i=0;i<piece;i++)
+            list.add(favorites.get(randomNumber[i]));
+        return list;
+    }
+
+    private void randomInt(int n,int piece){
+        for(int i=0; i<n; i++)
+            randomNumber[i] = i;
+        for(int i=0; i<piece; i++){
+            int random = new Random().nextInt(n);
+            int change = randomNumber[i];
+            randomNumber[i] = randomNumber[random];
+            randomNumber[random] = change;
+        }
     }
 
 }

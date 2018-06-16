@@ -30,7 +30,7 @@ public class FavoriteService {
         this.repository.deleteById(favoriteId);
     }
 
-    public Iterable<Favorite> findByUser(User user) { return this.repository.findAllByUser(user);}
+    public List<Favorite> findByUser(User user) { return this.repository.findAllByUser(user);}
 
     public Favorite findByUserAndWord(User user, Word word) { return this.repository.findByUserAndWord(user,word); }
 

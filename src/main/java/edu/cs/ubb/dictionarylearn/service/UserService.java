@@ -23,8 +23,8 @@ public class UserService {
          return this.repository.save(user);
     }
 
-    public void deleteById(String email){
-        this.repository.deleteById(email);
+    public void deleteByEmail(String email){
+        this.repository.deleteByEmail(email);
     }
 
     public User findByEmailAndPassword(String email, String password){
