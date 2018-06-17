@@ -1,5 +1,6 @@
 package edu.cs.ubb.dictionarylearn.service;
 
+import com.sun.corba.se.impl.oa.toa.TOA;
 import edu.cs.ubb.dictionarylearn.model.Told;
 import edu.cs.ubb.dictionarylearn.model.Word;
 import edu.cs.ubb.dictionarylearn.repository.ToldRepository;
@@ -20,8 +21,6 @@ public class ToldService {
 
     public void save(Told told){ this.repository.save(told); }
 
-    //public void saveTold(String told, Long wordId) { this.repository.saveTold(told,wordId);}
-
     public void deleteById(Long toldId){
         this.repository.deleteById(toldId);
     }
@@ -35,8 +34,4 @@ public class ToldService {
     public  Told findAllByTold(String told) { return repository.findByTold(told);}
 
     public void deleteByTold(String told) { repository.deleteByTold(told);}
-
-    public void deleteByToldId(Long toldId) { repository.deleteById(toldId);}
-
-
 }

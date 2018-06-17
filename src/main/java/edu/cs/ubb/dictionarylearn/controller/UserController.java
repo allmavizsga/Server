@@ -4,6 +4,7 @@ import edu.cs.ubb.dictionarylearn.model.User;
 import edu.cs.ubb.dictionarylearn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,7 +39,7 @@ public class UserController {
 
     @RequestMapping(path = "/{email}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteByIdEmail(@PathVariable String email){
-         this.service.deleteByEmail(email);
+        this.service.deleteByEmail(email);
     }
 
     @RequestMapping(path = "/newuser",  method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,4 +58,3 @@ public class UserController {
         return  new User();
     }
 }
-

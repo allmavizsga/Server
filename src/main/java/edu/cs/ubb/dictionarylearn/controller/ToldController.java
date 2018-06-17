@@ -27,7 +27,6 @@ public class ToldController {
         return this.service.findAll();
     }
 
-
     @PostMapping("/ptold")
     public Told getToldByTold(@RequestBody String told){
         told = told.replace('+',' ');
@@ -59,5 +58,6 @@ public class ToldController {
         System.out.println(word.getWordId());
         return this.service.findAllByWord( word);
     }
+
 
 }

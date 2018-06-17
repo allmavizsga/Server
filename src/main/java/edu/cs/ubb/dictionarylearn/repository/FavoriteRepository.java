@@ -15,7 +15,7 @@ public interface FavoriteRepository extends CrudRepository<Favorite, Long> {
     public Favorite findByFavoriteId(Long favoriteId);
     public List<Favorite> findAllByUser(User user);
     public Favorite findByUserAndWord(User user, Word word);
-   // public Favorite findByWordId(Long wordId);
+    // public Favorite findByWordId(Long wordId);
 
 
 }

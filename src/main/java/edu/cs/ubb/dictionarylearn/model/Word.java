@@ -9,11 +9,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table
+@NoArgsConstructor
 public class Word {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "seq_gen")
+    @GeneratedValue(generator = "seq_gen")
     private Long wordId;
 
     @NotNull

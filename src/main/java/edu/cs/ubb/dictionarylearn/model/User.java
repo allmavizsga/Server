@@ -10,14 +10,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table
+@NoArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-
-    @NotNull
     @Column(length = 100)
     private String email;
 
@@ -37,8 +33,7 @@ public class User {
     @Column(length = 100)
     private String state;
 
-    @Column()
-    private Boolean admin;
+    private boolean admin;
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private Set<Favorite> favorites = new HashSet<Favorite>();
@@ -46,18 +41,9 @@ public class User {
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private Set<AllowTold> allowTolds = new HashSet<AllowTold>();
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public String getEmail() {
         return email;
     }
-
 
     public void setEmail(String email) {
         this.email = email;

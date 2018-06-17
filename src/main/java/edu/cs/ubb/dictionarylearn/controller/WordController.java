@@ -43,6 +43,4 @@ public class WordController {
         return this.service.findAllByEnglish( english);
     }
 
-
-
 }

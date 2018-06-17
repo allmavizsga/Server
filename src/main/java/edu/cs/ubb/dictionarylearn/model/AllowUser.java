@@ -1,18 +1,15 @@
 package edu.cs.ubb.dictionarylearn.model;
 
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table
+@NoArgsConstructor
 public class AllowUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long allowUserId;
-
-    @NotNull
     @Column(length = 100)
     private String allowUserEmail;
 
@@ -34,14 +31,6 @@ public class AllowUser {
 
     @Column()
     private Boolean allowUserAdmin;
-
-    public Long getAllowUserId() {
-        return allowUserId;
-    }
-
-    public void setAllowUserId(Long allowUserId) {
-        this.allowUserId = allowUserId;
-    }
 
     public String getEmail() {
         return allowUserEmail;

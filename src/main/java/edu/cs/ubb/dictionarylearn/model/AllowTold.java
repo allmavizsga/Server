@@ -1,14 +1,18 @@
+
 package edu.cs.ubb.dictionarylearn.model;
+
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table
+@NoArgsConstructor
 public class AllowTold {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "seq_gen")
+    @GeneratedValue(generator = "seq_gen")
     private Long allowToldId;
 
     @NotNull

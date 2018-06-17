@@ -20,7 +20,7 @@ public class UserService {
     }
 
     public User save(User user){
-         return this.repository.save(user);
+        return this.repository.save(user);
     }
 
     public void deleteByEmail(String email){

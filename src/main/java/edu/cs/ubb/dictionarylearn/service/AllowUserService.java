@@ -19,14 +19,11 @@ public class AllowUserService {
 
     public AllowUser save(AllowUser usr){ return this.repository.save(usr); }
 
-    public void deleteByEmail(String email){
-        this.repository.deleteByEmail(email);
-    }
-    public void deleteById(Long id){
-        this.repository.deleteById(id);
+    public void deleteById(String email){
+        this.repository.deleteById(email);
     }
 
-    public Iterable<AllowUser> findByAllowUserEmail(String email){
-        return this.repository.findByEmail(email);
+    public AllowUser findByAllowUserEmail(String email){
+        return this.repository.findByAllowUserEmail(email);
     }
 }
