@@ -56,14 +56,12 @@ public class GuestController {
         return guestService.getAll();
     }
 
-    @PostMapping
-    public void save(@RequestBody Guest guest){
-        guestService.addNew(guest);
-    }
 
-    @PutMapping("/{id}")
-    public void update(@RequestBody Guest guest){
-        guestService.update(guest);
+    @PostMapping("/{userName}")
+    public Guest update(@PathVariable String userName){
+        Guest guest = new Guest();
+        guest.setName(userName);
+        return guestService.addNew(guest);
     }
 
     @DeleteMapping("/id")

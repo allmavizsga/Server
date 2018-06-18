@@ -65,13 +65,11 @@ public class AllovUserController {
 
     @RequestMapping(path = "/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public AllowUser saveAllowUser(@RequestBody AllowUserSave allowUserSave){
-        System.out.println(allowUserSave.getAllowUserAdmin());
         AllowUser allowUser = new AllowUser();
         if(allowUserSave.getAllowUserAdmin() == "true")
             allowUser.setAdmin(true);
         else
             allowUser.setAdmin(false);
-        //allowUser.setAdmin();
         allowUser.setAddress(allowUserSave.getAllowUserAddress());
         allowUser.setEmail(allowUserSave.getAllowUserEmail());
         allowUser.setPassword(allowUserSave.getAllowUserpassword());

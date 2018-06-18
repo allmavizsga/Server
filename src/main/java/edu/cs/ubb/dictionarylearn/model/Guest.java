@@ -1,39 +1,5 @@
 package edu.cs.ubb.dictionarylearn.model;
-//
-//import lombok.NoArgsConstructor;
-//
-//import javax.persistence.*;
-//import javax.validation.constraints.NotNull;
-//
-//@Entity
-//@NoArgsConstructor
-//public class Guest {
-//
-//    @Id
-//    @SequenceGenerator(name = "seq_gen")
-//    @GeneratedValue(generator = "seq_gen")
-//    private Long guestId;
-//
-//    @NotNull
-//    @Column(length = 100)
-//    private String guestName;
-//
-//    public long getGuestId() {
-//        return guestId;
-//    }
-//
-//    public void setGuestId(long id) {
-//        this.guestId = id;
-//    }
-//
-//    public String getGuestName() {
-//        return guestName;
-//    }
-//
-//    public void setGuestName(String guestName) {
-//        this.guestName = guestName;
-//    }
-//}
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -41,8 +41,8 @@ public class GuestService{
         guestRepository.deleteById(id);
     }
 
-    public void addNew(Guest guest) {
-        guestRepository.save(guest);
+    public Guest addNew(Guest guest) {
+        return guestRepository.save(guest);
     }
 
     public void update(Guest guest) {
