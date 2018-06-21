@@ -30,6 +30,10 @@ public class ToldController {
     @PostMapping("/ptold")
     public Told getToldByTold(@RequestBody String told){
         told = told.replace('+',' ');
+        told = told.replace("%21","!");
+        told = told.replace("%3F","?");
+        told = told.replace("%2C",",");
+
         told = told.substring(0,told.length()-1);
         System.out.println(told);
         return this.service.findAllByTold(told);

@@ -12,5 +12,5 @@ public interface WordRepository extends JpaRepository<Word, Long> {
     public Iterable<Word> findAllByEnglish(String english);
 
 //    @Query("SELECT w FROM Word w WHERE w.hungarian = :hungarian")
-//    public Iterable<Word> findAllByHungarian(@Param("hungarian") String hunggarian);
+//    public Iterable<Word> findAllByHungarian(@Param("hungarian") String hungarian);
 }

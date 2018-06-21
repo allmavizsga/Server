@@ -34,6 +34,8 @@ public class FavoriteService {
 
     public Favorite findByUserAndWord(User user, Word word) { return this.repository.findByUserAndWord(user,word); }
 
+    public void deleteAllByUser(User user) { this.repository.deleteAllByUser(user);}
+
     //public Favorite findByWordId(Long wordId) { return this.repository.findByWordId(wordId); }//  LONG-OT KERESEK. NEM TUDJA, HOGY MELYIK SZERINT?
 
 }

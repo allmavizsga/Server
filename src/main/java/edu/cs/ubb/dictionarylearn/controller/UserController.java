@@ -1,6 +1,11 @@
 package edu.cs.ubb.dictionarylearn.controller;
 
+import edu.cs.ubb.dictionarylearn.model.AllowTold;
+import edu.cs.ubb.dictionarylearn.model.AllowToldSave;
+import edu.cs.ubb.dictionarylearn.model.Favorite;
 import edu.cs.ubb.dictionarylearn.model.User;
+import edu.cs.ubb.dictionarylearn.service.AllowToldService;
+import edu.cs.ubb.dictionarylearn.service.FavoriteService;
 import edu.cs.ubb.dictionarylearn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,10 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService service;
+    private FavoriteService favoriteService;
+    private AllowToldService allowToldService;
 
     @Autowired
-    public UserController(UserService service){
+    public UserController(UserService service, FavoriteService favoriteService, AllowToldService allowToldService){
         this.service = service;
+        this.favoriteService = favoriteService;
+        this.allowToldService = allowToldService;
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,6 +48,18 @@ public class UserController {
 
     @RequestMapping(path = "/{email}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteByIdEmail(@PathVariable String email){
+        User user = this.service.findByEmail(email);
+        Iterable<Favorite> favorites = this.favoriteService.findAll();
+        for (Favorite f:favorites) {
+            if(f.getUser().getEmail() == user.getEmail()){
+                this.favoriteService.deleteById(f.getfavoriteId());
+            }
+        }
+        Iterable<AllowTold> allowTolds = this.allowToldService.findAll();
+        for (AllowTold a:allowTolds){
+            if(a.getUser().getEmail() == user.getEmail())
+                this.allowToldService.deleteById(a.getAllowToldId());
+        }
         this.service.deleteByEmail(email);
     }
 

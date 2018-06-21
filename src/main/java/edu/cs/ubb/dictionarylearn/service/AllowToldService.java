@@ -1,6 +1,7 @@
 package edu.cs.ubb.dictionarylearn.service;
 
 import edu.cs.ubb.dictionarylearn.model.AllowTold;
+import edu.cs.ubb.dictionarylearn.model.User;
 import edu.cs.ubb.dictionarylearn.repository.AllowToldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,6 @@ public class AllowToldService {
     public AllowTold findByAllowToldId(Long allowToldId){
         return this.repository.findByAllowToldId(allowToldId);
     }
+
+    public void deleteAllByUser(User user) { this.repository.deleteAllByUser(user);}
 }

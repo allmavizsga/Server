@@ -4,6 +4,7 @@ import edu.cs.ubb.dictionarylearn.model.User;
 import edu.cs.ubb.dictionarylearn.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -23,8 +24,9 @@ public class UserService {
         return this.repository.save(user);
     }
 
+    @Transactional
     public void deleteByEmail(String email){
-        this.repository.deleteByEmail(email);
+        this.repository.deleteUserByEmail(email);
     }
 
     public User findByEmailAndPassword(String email, String password){
