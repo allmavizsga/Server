@@ -22,7 +22,7 @@ public class Word {
     private String hungarian;
 
     @NotNull
-    @Column(length = 100)
+    @Column(length = 200)
     private String english;
 
     @OneToMany(mappedBy="word", cascade=CascadeType.ALL)

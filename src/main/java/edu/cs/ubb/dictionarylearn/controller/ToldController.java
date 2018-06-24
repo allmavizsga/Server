@@ -35,7 +35,7 @@ public class ToldController {
         told = told.replace("%2C",",");
 
         told = told.substring(0,told.length()-1);
-        System.out.println(told);
+        //System.out.println(told);
         return this.service.findAllByTold(told);
     }
 
@@ -43,10 +43,14 @@ public class ToldController {
     public void save(@RequestBody String told, @RequestBody Long wordId){
         told = told.replace('+',' ');
         told = told.substring(0,told.length()-1);
-        System.out.println(told);
+        //System.out.println(told);
         Told mytold = new Told();
         mytold.setTold(told);
         Word word = this.wordService.findByWordId(wordId);
+        String hungarian = word.getHungarian();
+        hungarian = hungarian.replace("ő",")");
+        hungarian = hungarian.replace("ű","|");
+        word.setHungarian(hungarian);
         mytold.setWord(word);
         this.service.save(mytold);
     }
@@ -59,7 +63,11 @@ public class ToldController {
     @RequestMapping(path = "/tolds/{wordId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Told> findAllByWord(@PathVariable Long wordId){
         Word word = this.wordService.findByWordId(wordId);
-        System.out.println(word.getWordId());
+        //System.out.println(word.getWordId());
+        String hungarian = word.getHungarian();
+        hungarian = hungarian.replace("ő",")");
+        hungarian = hungarian.replace("ű","|");
+        word.setHungarian(hungarian);
         return this.service.findAllByWord( word);
     }
 

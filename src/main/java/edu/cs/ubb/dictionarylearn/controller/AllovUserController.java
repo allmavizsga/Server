@@ -56,8 +56,6 @@ public class AllovUserController {
             user.setState(allowUser.getState());
             user.setTown(allowUser.getTown());
             this.userService.save(user);
-
-            System.out.println("itt");
         }
 
         this.service.deleteById(allowUserEmail);

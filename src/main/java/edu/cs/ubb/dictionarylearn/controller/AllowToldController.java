@@ -37,18 +37,18 @@ public class AllowToldController {
     public AllowTold getFirstAllowTolds(){
         Iterable<AllowTold> allowTold = this.service.findAll();
         if(allowTold.iterator().hasNext()) {
-            System.out.println("Benne allowtold first");
+            //ystem.out.println("Benne allowtold first");
             return allowTold.iterator().next();
         }
-        System.out.println("nincs benne allowtold first");
+        //System.out.println("nincs benne allowtold first");
         AllowTold myallowTold = new AllowTold();
-        System.out.println(myallowTold.getAllowTold());
+        //System.out.println(myallowTold.getAllowTold());
         return myallowTold;
     }
 
     @RequestMapping(path = "/{allowToldId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteAllowTolds(@PathVariable Long allowToldId){
-        System.out.println("Benne allowtold delete");
+        //System.out.println("Benne allowtold delete");
         this.service.deleteById(allowToldId);
     }
 
@@ -62,7 +62,7 @@ public class AllowToldController {
         this.service.deleteById(allowToldId);
         System.out.println(this.toldService.findAllByTold(told.getTold()));
         if( this.toldService.findAllByTold(told.getTold()) == null) {
-            System.out.println("Benne allowtold accept");
+            //System.out.println("Benne allowtold accept");
             this.toldService.save(told);
         }
     }
@@ -75,11 +75,15 @@ public class AllowToldController {
         allowTold.setAllowTold(told);
         System.out.println(told);
         Word word = this.wordService.findByWordId(allowToldSave.getWordId());
+        String hungarian = word.getHungarian();
+        hungarian = hungarian.replace("ő",")");
+        hungarian = hungarian.replace("ű","|");
+        word.setHungarian(hungarian);
         allowTold.setWord(word);
         User user = this.userService.findByEmail(allowToldSave.getEmail());
         allowTold.setUser(user);
         allowTold.setAllowToldId(0L);
-        System.out.println("Benne allowtold new");
+        //System.out.println("Benne allowtold new");
         this.service.save(allowTold);
     }
 

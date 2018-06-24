@@ -41,7 +41,17 @@ public class FavoriteController {
     @RequestMapping(path = "/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Favorite> findByEmail(@PathVariable String email){
         List<Favorite> favorite = this.service.findByUser( this.userService.findByEmail(email));
-        return  favorite;
+        List<Favorite> favorites = new ArrayList<Favorite>();
+        for(Favorite f:favorite){
+            Word word = f.getWord();
+            String hungarian = word.getHungarian();
+            hungarian = hungarian.replace(")","ő");
+            hungarian = hungarian.replace("|","ű");
+            word.setHungarian(hungarian);
+            f.setWord(word);
+            favorites.add(f);
+        }
+        return  favorites;
     }
 
     @RequestMapping(path = "/{email}/{wordId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,8 +59,12 @@ public class FavoriteController {
         Favorite favorite = new Favorite();
         User user = this.userService.findByEmail(email);
         Word word = this.wordService.findByWordId(wordId);
+        String hungarian = word.getHungarian();
+        hungarian = hungarian.replace("ő",")");
+        hungarian = hungarian.replace("ű","|");
+        word.setHungarian(hungarian);
         if(this.service.findByUserAndWord( user, word) != null){
-            System.out.println("megkapta");
+            //System.out.println("megkapta");
             favorite = this.service.findByUserAndWord( user, word);
         }
         return favorite;
@@ -60,11 +74,20 @@ public class FavoriteController {
     @RequestMapping(path = "/game/{email}/{piece}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Favorite> findfirstTwentyByEmail(@PathVariable String email, @PathVariable int piece){
         List<Favorite> favorite = this.service.findByUser( this.userService.findByEmail(email));
-        System.out.println("");
-        if( favorite.size() <= piece) {
+        List<Favorite> favorites = new ArrayList<Favorite>();
+        for(Favorite f:favorite){
+            Word word = f.getWord();
+            String hungarian = word.getHungarian();
+            hungarian = hungarian.replace(")","ő");
+            hungarian = hungarian.replace("|","ű");
+            word.setHungarian(hungarian);
+            f.setWord(word);
+            favorites.add(f);
+        }
+        if( favorites.size() <= piece) {
             return favorite;
         } else{
-            return randomList(favorite.size(),favorite,piece);
+            return randomList(favorites.size(),favorites,piece);
         }
 
     }
@@ -73,14 +96,24 @@ public class FavoriteController {
     public void save(@PathVariable String email, @PathVariable Long wordId){
         Favorite favorite = new Favorite();
         favorite.setUser( this.userService.findByEmail(email) );
-        favorite.setWord(  this.wordService.findByWordId(wordId) );
+        Word word = this.wordService.findByWordId(wordId);
+        String hungarian = word.getHungarian();
+        hungarian = hungarian.replace("ő",")");
+        hungarian = hungarian.replace("ű","|");
+        word.setHungarian(hungarian);
+        favorite.setWord(word);
         favorite.setFavoriteId( 0L );
         this.service.save( favorite );
     }
 
     @RequestMapping(path = "/{email}/{wordId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable String email, @PathVariable Long wordId){
-        this.service.deleteById( this.service.findByUserAndWord( this.userService.findByEmail(email), this.wordService.findByWordId(wordId)).getfavoriteId() );
+        Word word = this.wordService.findByWordId(wordId);
+        String hungarian = word.getHungarian();
+        hungarian = hungarian.replace("ő",")");
+        hungarian = hungarian.replace("ű","|");
+        word.setHungarian(hungarian);
+        this.service.deleteById( this.service.findByUserAndWord( this.userService.findByEmail(email), word).getfavoriteId() );
     }
 
     private List<Favorite> randomList(int n, List<Favorite> favorites,int piece){
